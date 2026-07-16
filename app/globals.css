@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+/* -------------------- */
+/* Theme */
+/* -------------------- */
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+
+  --primary: #2563eb;
+  --secondary: #06b6d4;
+  --accent: #f97316;
+
+  --border: #e2e8f0;
+}
+
+/* -------------------- */
+/* Tailwind Theme */
+/* -------------------- */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --font-sans: "Inter", var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* -------------------- */
+/* Base */
+/* -------------------- */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Inter", sans-serif;
+}
+
+/* -------------------- */
+/* Buttons */
+/* -------------------- */
+
+.btn-primary {
+  @apply bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold transition hover:bg-blue-700;
+}
+
+.btn-secondary {
+  @apply border border-blue-600 text-blue-600 px-6 py-3 rounded-xl transition hover:bg-blue-600 hover:text-white;
+}
+
+/* -------------------- */
+/* Cards */
+/* -------------------- */
+
+.card {
+  @apply bg-white rounded-2xl shadow-md transition duration-300 hover:shadow-xl;
+}
+
+/* -------------------- */
+/* Container */
+/* -------------------- */
+
+.container-custom {
+  @apply max-w-7xl mx-auto px-6;
+}
+
+/* -------------------- */
+/* Scrollbar */
+/* -------------------- */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2563eb;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e5e7eb;
+}
+
+/* -------------------- */
+/* Text Selection */
+/* -------------------- */
+
+::selection {
+  background: #2563eb;
+  color: white;
+} 
