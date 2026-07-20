@@ -17,29 +17,17 @@ export default async function ServicePage({ params }: Props) {
   if (!service) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-red-600">
-            Service Not Found
-          </h1>
-
-          <Link
-            href="/"
-            className="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded-xl"
-          >
-            Back Home
-          </Link>
-        </div>
+        <h1 className="text-3xl font-bold">
+          Service Not Found
+        </h1>
       </div>
     );
   }
 
   return (
     <main className="bg-gray-100 min-h-screen">
-
       <section className="bg-gradient-to-r from-blue-700 to-cyan-600 text-white">
-
         <div className="max-w-6xl mx-auto py-16 px-6">
-
           <p className="text-sm opacity-80">
             Home / Services / {service.title}
           </p>
@@ -56,17 +44,13 @@ export default async function ServicePage({ params }: Props) {
             Digital Desk provides a fast, secure and easy online
             application process for {service.title}.
           </p>
-
         </div>
-
       </section>
 
       <section className="max-w-6xl mx-auto py-16 px-6">
-
         <div className="grid lg:grid-cols-3 gap-8">
 
           <div className="lg:col-span-2 bg-white rounded-3xl shadow-lg p-8">
-
             <h2 className="text-3xl font-bold mb-6">
               About this Service
             </h2>
@@ -87,25 +71,41 @@ export default async function ServicePage({ params }: Props) {
               <li>✅ Application Tracking</li>
               <li>✅ Instant Support</li>
             </ul>
-
           </div>
 
           <div className="bg-white rounded-3xl shadow-lg p-8">
-
             <h2 className="text-2xl font-bold mb-6">
-              Quick Actions
+              Apply for {service.title}
             </h2>
 
-            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl mb-4">
-              Apply Now
-            </button>
+            <input
+              type="text"
+              placeholder="Your Name"
+              className="w-full border p-3 rounded-xl mb-4"
+            />
+
+            <input
+              type="tel"
+              placeholder="Mobile Number"
+              className="w-full border p-3 rounded-xl mb-4"
+            />
+
+            <textarea
+              placeholder="Write your requirement..."
+              className="w-full border p-3 rounded-xl mb-4 h-28"
+            />
+
+            <a
+              href={`https://wa.me/919696295457?text=Hello Digital Desk, I want service for ${service.title}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-center w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl mb-4"
+            >
+              Send on WhatsApp
+            </a>
 
             <button className="w-full border border-blue-600 text-blue-600 py-3 rounded-xl mb-4">
               Required Documents
-            </button>
-
-            <button className="w-full border border-gray-300 py-3 rounded-xl">
-              Check Status
             </button>
 
             <Link
@@ -114,13 +114,10 @@ export default async function ServicePage({ params }: Props) {
             >
               ← Back to Home
             </Link>
-
           </div>
 
         </div>
-
       </section>
-
     </main>
   );
 }
