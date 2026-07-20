@@ -57,20 +57,8 @@ export default async function ServicePage({ params }: Props) {
 
             <p className="text-gray-600 leading-8">
               Complete your {service.title} application online through
-              Digital Desk. Upload documents, verify information,
-              track status and download acknowledgements from one place.
+              Digital Desk.
             </p>
-
-            <h3 className="text-2xl font-semibold mt-10 mb-5">
-              Benefits
-            </h3>
-
-            <ul className="space-y-3 text-gray-700">
-              <li>✅ Fast Online Processing</li>
-              <li>✅ Secure Document Upload</li>
-              <li>✅ Application Tracking</li>
-              <li>✅ Instant Support</li>
-            </ul>
           </div>
 
           <div className="bg-white rounded-3xl shadow-lg p-8">
@@ -104,15 +92,11 @@ export default async function ServicePage({ params }: Props) {
               Send on WhatsApp
             </a>
 
-            <button className="w-full border border-blue-600 text-blue-600 py-3 rounded-xl mb-4">
-              Required Documents
-            </button>
-
             <Link
               href="/"
               className="block text-center mt-8 text-blue-600 font-semibold"
             >
-              ← Back to Home
+              Back to Home
             </Link>
           </div>
 
