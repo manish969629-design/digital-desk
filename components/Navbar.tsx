@@ -29,13 +29,12 @@ export default function Navbar() {
 
           <Link href="/" className="flex items-center gap-3">
             <Image
-              src="/images/logo.png"
-              alt="Digital Desk"
-              width={60}
-              height={60}
-              priority
-              className="rounded-xl"
-            />
+  src="/images/logo.png"
+  alt="Digital Desk"
+  width={60}
+  height={60}
+  style={{ width: "auto", height: "auto" }}
+/>
 
             <div>
               <h1 className="font-extrabold text-2xl text-slate-900">
