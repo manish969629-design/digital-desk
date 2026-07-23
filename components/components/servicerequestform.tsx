@@ -2,55 +2,49 @@
 
 import { useState } from "react";
 
-interface Props {
-  serviceName: string;
-}
+type Props = {
+  service: string;
+};
 
 export default function ServiceRequestForm({
-  serviceName,
+  service,
 }: Props) {
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleSubmit = () => {
-    if (!name || !mobile) {
-      alert("Name and Mobile Number required");
+  const sendWhatsApp = () => {
+    if (!name.trim() || !mobile.trim()) {
+      alert("Please enter Name and Mobile Number");
       return;
     }
 
     const text = `
-*Digital Desk Service Request*
+*New Service Request*
 
-📌 Service: ${serviceName}
+Name: ${name}
+Mobile: ${mobile}
+Service: ${service}
 
-👤 Name: ${name}
-
-📱 Mobile: ${mobile}
-
-📝 Message: ${message}
+Message:
+${message}
 `;
 
-    const whatsappUrl =
-      `https://wa.me/919696295457?text=${encodeURIComponent(
-        text
-      )}`;
+    const whatsappUrl = `https://wa.me/919696295457?text=${encodeURIComponent(
+      text
+    )}`;
 
     window.open(whatsappUrl, "_blank");
   };
 
   return (
-    <div className="bg-white rounded-3xl shadow-xl p-8">
-      <h2 className="text-3xl font-bold mb-6">
-        Apply for {serviceName}
-      </h2>
-
+    <div className="space-y-4">
       <input
         type="text"
-        placeholder="Full Name"
+        placeholder="Your Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="w-full border rounded-xl p-3 mb-4"
+        className="w-full border p-3 rounded-xl"
       />
 
       <input
@@ -58,28 +52,19 @@ export default function ServiceRequestForm({
         placeholder="Mobile Number"
         value={mobile}
         onChange={(e) => setMobile(e.target.value)}
-        className="w-full border rounded-xl p-3 mb-4"
+        className="w-full border p-3 rounded-xl"
       />
 
       <textarea
-        rows={4}
         placeholder="Write your requirement..."
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        className="w-full border rounded-xl p-3 mb-4"
+        className="w-full border p-3 rounded-xl h-28"
       />
 
       <button
-        onClick={handleSubmit}
-        className="
-          w-full
-          bg-green-600
-          hover:bg-green-700
-          text-white
-          font-bold
-          py-4
-          rounded-xl
-        "
+        onClick={sendWhatsApp}
+        className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold"
       >
         Send on WhatsApp
       </button>
