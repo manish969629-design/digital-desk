@@ -30,9 +30,8 @@ Message:
 ${message}
 `;
 
-    const whatsappUrl = `https://wa.me/919696295457?text=${encodeURIComponent(
-      text
-    )}`;
+    const whatsappUrl =
+      `https://wa.me/919696295457?text=${encodeURIComponent(text)}`;
 
     window.open(whatsappUrl, "_blank");
   };

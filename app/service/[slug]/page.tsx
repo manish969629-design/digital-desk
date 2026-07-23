@@ -1,7 +1,6 @@
-import ServiceRequestForm from "@/components/ServiceRequestForm";
 import { services } from "@/data/services";
 import Link from "next/link";
-import ServiceRequestForm from "@/components/ServiceRequestForm";
+import ServiceRequestForm from "@/components/ai/ServiceRequestForm";
 
 type Props = {
   params: Promise<{
@@ -37,10 +36,8 @@ export default async function ServicePage({ params }: Props) {
 
   return (
     <main className="bg-gray-100 min-h-screen">
-
       <section className="bg-gradient-to-r from-blue-700 to-cyan-600 text-white">
         <div className="max-w-6xl mx-auto py-16 px-6">
-
           <p className="text-sm opacity-80">
             Home / Services / {service.title}
           </p>
@@ -57,17 +54,13 @@ export default async function ServicePage({ params }: Props) {
             Digital Desk provides a fast, secure and easy online
             application process for {service.title}.
           </p>
-
         </div>
       </section>
 
       <section className="max-w-6xl mx-auto py-16 px-6">
-
         <div className="grid lg:grid-cols-3 gap-8">
 
-          {/* Left Side */}
           <div className="lg:col-span-2 bg-white rounded-3xl shadow-lg p-8">
-
             <h2 className="text-3xl font-bold mb-6">
               About this Service
             </h2>
@@ -98,19 +91,14 @@ export default async function ServicePage({ params }: Props) {
               Government Certificates, CSC Services and many other
               digital services with fast and reliable support.
             </p>
-
           </div>
 
-          {/* Right Side Form */}
           <div className="bg-white rounded-3xl shadow-lg p-8">
-
             <h2 className="text-2xl font-bold mb-6">
               Apply for {service.title}
             </h2>
 
-            <ServiceRequestForm
-              service={service.title}
-            />
+            <ServiceRequestForm service={service.title} />
 
             <Link
               href="/"
@@ -118,13 +106,10 @@ export default async function ServicePage({ params }: Props) {
             >
               ← Back to Home
             </Link>
-
           </div>
 
         </div>
-
       </section>
-
     </main>
   );
 }
