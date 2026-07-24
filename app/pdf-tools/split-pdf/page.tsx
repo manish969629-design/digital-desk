@@ -2,10 +2,15 @@
 
 import { useState } from "react";
 import { PDFDocument } from "pdf-lib";
+import JSZip from "jszip";
+import { saveAs } from "file-saver";
 
 export default function SplitPDFPage() {
-  const [file, setFile] = useState<File | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [file, setFile] =
+    useState<File | null>(null);
+
+  const [loading, setLoading] =
+    useState(false);
 
   async function handleSplit() {
     if (!file) {
@@ -16,51 +21,61 @@ export default function SplitPDFPage() {
     try {
       setLoading(true);
 
-      const bytes = await file.arrayBuffer();
+      const bytes =
+        await file.arrayBuffer();
 
-      const pdf = await PDFDocument.load(bytes);
+      const pdf =
+        await PDFDocument.load(bytes);
 
-      const totalPages = pdf.getPageCount();
+      const totalPages =
+        pdf.getPageCount();
 
-      for (let i = 0; i < totalPages; i++) {
-        const newPdf = await PDFDocument.create();
+      const zip = new JSZip();
 
-        const [page] = await newPdf.copyPages(pdf, [i]);
+      for (
+        let i = 0;
+        i < totalPages;
+        i++
+      ) {
+        const newPdf =
+          await PDFDocument.create();
+
+        const [page] =
+          await newPdf.copyPages(
+            pdf,
+            [i]
+          );
 
         newPdf.addPage(page);
 
-        const pdfBytes = await newPdf.save();
+        const pdfBytes =
+          await newPdf.save();
 
-        const blob = new Blob(
-  [new Uint8Array(pdfBytes)],
-  {
-    type: "application/pdf",
-  }
-);
-
-        const url =
-          URL.createObjectURL(blob);
-
-        const a =
-          document.createElement("a");
-
-        a.href = url;
-        a.download = `page-${i + 1}.pdf`;
-
-        document.body.appendChild(a);
-
-        a.click();
-
-        document.body.removeChild(a);
-
-        URL.revokeObjectURL(url);
+        zip.file(
+          `page-${i + 1}.pdf`,
+          pdfBytes
+        );
       }
 
-      alert("PDF Split Successfully!");
+      const zipBlob =
+        await zip.generateAsync({
+          type: "blob",
+        });
+
+      saveAs(
+        zipBlob,
+        "split-pdf-pages.zip"
+      );
+
+      alert(
+        `Successfully split ${totalPages} pages into ZIP file.`
+      );
     } catch (error) {
       console.error(error);
 
-      alert("Error splitting PDF.");
+      alert(
+        "Error splitting PDF."
+      );
     } finally {
       setLoading(false);
     }
@@ -77,7 +92,7 @@ export default function SplitPDFPage() {
           </h1>
 
           <p className="mt-4 text-lg">
-            Split PDF into separate pages.
+            Split PDF into separate pages and download as ZIP.
           </p>
 
         </div>
@@ -106,7 +121,8 @@ export default function SplitPDFPage() {
               accept=".pdf"
               onChange={(e) =>
                 setFile(
-                  e.target.files?.[0] || null
+                  e.target.files?.[0] ||
+                    null
                 )
               }
               className="mt-6"
@@ -128,11 +144,12 @@ export default function SplitPDFPage() {
                 py-4
                 text-white
                 font-bold
+                disabled:opacity-50
               "
             >
               {loading
-                ? "Splitting..."
-                : "Split PDF"}
+                ? "Creating ZIP..."
+                : "Split PDF & Download ZIP"}
             </button>
           )}
 

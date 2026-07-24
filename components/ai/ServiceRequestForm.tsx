@@ -12,14 +12,37 @@ export default function ServiceRequestForm({
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const sendWhatsApp = () => {
+  const sendWhatsApp = async () => {
     if (!name.trim() || !mobile.trim()) {
       alert("Please enter Name and Mobile Number");
       return;
     }
 
-    const text = `
+    try {
+      setLoading(true);
+
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          mobile,
+          service,
+          message,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.message);
+      }
+
+      const text = `
 *New Service Request*
 
 Name: ${name}
@@ -30,14 +53,28 @@ Message:
 ${message}
 `;
 
-    const whatsappUrl =
-      `https://wa.me/919696295457?text=${encodeURIComponent(text)}`;
+      const whatsappUrl =
+        `https://wa.me/919696295457?text=${encodeURIComponent(text)}`;
 
-    window.open(whatsappUrl, "_blank");
+      window.open(whatsappUrl, "_blank");
+
+      alert("Request submitted successfully!");
+
+      setName("");
+      setMobile("");
+      setMessage("");
+    } catch (error) {
+      console.error(error);
+
+      alert("Failed to submit request");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="space-y-4">
+
       <input
         type="text"
         placeholder="Your Name"
@@ -63,10 +100,12 @@ ${message}
 
       <button
         onClick={sendWhatsApp}
-        className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold"
+        disabled={loading}
+        className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold disabled:opacity-50"
       >
-        Send on WhatsApp
+        {loading ? "Submitting..." : "Send on WhatsApp"}
       </button>
+
     </div>
   );
 }

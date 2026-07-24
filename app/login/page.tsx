@@ -1,103 +1,70 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { User, Mail, Lock, Phone } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
-  const [isLogin, setIsLogin] = useState(true);
+  const router = useRouter();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const login = () => {
+    const adminUser =
+      process.env.NEXT_PUBLIC_ADMIN_USERNAME;
+
+    const adminPass =
+      process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+
+    if (
+      username === adminUser &&
+      password === adminPass
+    ) {
+      localStorage.setItem(
+        "digitaldesk_admin",
+        "true"
+      );
+
+      router.push("/app/admin");
+    } else {
+      alert("Invalid Login");
+    }
+  };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-700 via-cyan-600 to-blue-900 flex items-center justify-center p-6">
+    <main className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-3xl shadow-xl w-full max-w-md">
+        <h1 className="text-3xl font-bold mb-6 text-center">
+          Digital Desk Admin Login
+        </h1>
 
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-8">
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) =>
+            setUsername(e.target.value)
+          }
+          className="w-full border p-3 rounded-xl mb-4"
+        />
 
-        <div className="text-center">
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) =>
+            setPassword(e.target.value)
+          }
+          className="w-full border p-3 rounded-xl mb-4"
+        />
 
-          <h1 className="text-4xl font-black text-slate-900">
-            Digital Desk
-          </h1>
-
-          <p className="text-slate-500 mt-2">
-            {isLogin ? "Login to your account" : "Create new account"}
-          </p>
-
-        </div>
-
-        <div className="mt-8 space-y-5">
-
-          {!isLogin && (
-            <div className="relative">
-              <User className="absolute left-4 top-4 text-slate-400" size={18} />
-              <input
-                type="text"
-                placeholder="Full Name"
-                className="w-full border rounded-xl py-3 pl-12 pr-4 outline-none focus:border-blue-500"
-              />
-            </div>
-          )}
-
-          <div className="relative">
-            <Mail className="absolute left-4 top-4 text-slate-400" size={18} />
-            <input
-              type="email"
-              placeholder="Email Address"
-              className="w-full border rounded-xl py-3 pl-12 pr-4 outline-none focus:border-blue-500"
-            />
-          </div>
-
-          {!isLogin && (
-            <div className="relative">
-              <Phone className="absolute left-4 top-4 text-slate-400" size={18} />
-              <input
-                type="tel"
-                placeholder="Mobile Number"
-                className="w-full border rounded-xl py-3 pl-12 pr-4 outline-none focus:border-blue-500"
-              />
-            </div>
-          )}
-
-          <div className="relative">
-            <Lock className="absolute left-4 top-4 text-slate-400" size={18} />
-            <input
-              type="password"
-              placeholder="Password"
-              className="w-full border rounded-xl py-3 pl-12 pr-4 outline-none focus:border-blue-500"
-            />
-          </div>
-
-          <button className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 py-3 text-white font-bold hover:opacity-90">
-            {isLogin ? "Login" : "Create Account"}
-          </button>
-
-        </div>
-
-        <div className="mt-6 text-center">
-
-          <button
-            onClick={() => setIsLogin(!isLogin)}
-            className="text-blue-600 font-semibold"
-          >
-            {isLogin
-              ? "Create New Account"
-              : "Already have an account? Login"}
-          </button>
-
-        </div>
-
-        <div className="mt-8 text-center">
-
-          <Link
-            href="/"
-            className="text-slate-500 hover:text-blue-600"
-          >
-            ← Back to Home
-          </Link>
-
-        </div>
-
+        <button
+          onClick={login}
+          className="w-full bg-blue-600 text-white py-3 rounded-xl"
+        >
+          Login
+        </button>
       </div>
-
     </main>
   );
 }
